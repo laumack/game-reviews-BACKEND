@@ -1,0 +1,9 @@
+You are now connected to database "nc_games_test" as user "lauren".
+    username     |   name   |                                avatar_url                                 
+-----------------+----------+---------------------------------------------------------------------------
+ mallionaire     | haz      | https://www.healthytherapies.com/wp-content/uploads/2016/06/Lime3.jpg
+ philippaclaire9 | philippa | https://avatars2.githubusercontent.com/u/24604688?s=460&v=4
+ bainesface      | sarah    | https://avatars2.githubusercontent.com/u/24394918?s=400&v=4
+ dav3rid         | dave     | https://www.golenbock.com/wp-content/uploads/2015/01/placeholder-user.png
+(4 rows)
+
