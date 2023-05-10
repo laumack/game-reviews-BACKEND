@@ -13,13 +13,10 @@ afterAll(() => {
 });
 
 describe("/api/categories - GET request", () => {
-  it("responds with a status code of 200", () => {
-    return request(app).get("/api/categories").expect(200);
-  });
-
-  it("responds with an array of the category objects, each with a slug property and a description property", () => {
+  it("responds with a status code of 200 and an array of the category objects, each with a slug property and a description property", () => {
     return request(app)
       .get("/api/categories")
+      .expect(200)
       .then((response) => {
         const { categories } = response.body;
         expect(categories.length).toBe(4);
@@ -32,18 +29,10 @@ describe("/api/categories - GET request", () => {
 });
 
 describe("Error handling", () => {
-  it("invalid path - responds with a status code of 404 if passed a route that does not exist", () => {
+  it("invalid path - responds with a status code of 404 and a specified error message if passed a route that does not exist", () => {
     return request(app)
-      .get("/api/invalidEndpoint")
-      .expect(404)
-      .then((response) => {
-        expect(response.body.msg).toEqual("Invalid input");
-      });
-  });
-
-  it("invalid path - responds with a specified error message if passed a route that does not exist", () => {
-    return request(app)
-      .get("/api/invalidEndpoint")
+        .get("/api/invalidEndpoint")
+        .expect(404)
       .then((response) => {
         expect(response.body.msg).toEqual("Invalid input");
       });

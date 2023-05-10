@@ -1,9 +1,7 @@
 const express = require("express");
 const app = express();
-const {
-  getCategories,
-  invalidPathHandler,
-} = require("../controllers/api.controllers.js");
+const { getCategories } = require("../controllers/api.controllers.js");
+const { invalidPathHandler } = require("../controllers/error.controllers.js")
 
 app.get("/api/categories", getCategories);
 app.get("*", invalidPathHandler);
