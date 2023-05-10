@@ -12,9 +12,6 @@ afterAll(() => {
   connection.end();
 });
 
-// When requesting multiple resources - test for shape
-// When requesting a specific resource - test for specific properties
-
 describe("/api/categories - GET request", () => {
   it("responds with a status code of 200", () => {
     return request(app).get("/api/categories").expect(200);
@@ -23,7 +20,6 @@ describe("/api/categories - GET request", () => {
   it("responds with an array of the category objects, each with a slug property and a description property", () => {
     return request(app)
       .get("/api/categories")
-      .expect(200)
       .then((response) => {
         const { categories } = response.body;
         expect(categories.length).toBe(4);
@@ -35,13 +31,21 @@ describe("/api/categories - GET request", () => {
   });
 });
 
-describe.skip("error handling", () => {
-  it("/api - responds with an error code of 404 if passed a route that does not exist (bad request)", () => {
+describe("Error handling", () => {
+  it("invalid path - responds with a status code of 404 if passed a route that does not exist", () => {
     return request(app)
-      .get("/api/invalidURL")
+      .get("/api/invalidEndpoint")
       .expect(404)
-        .then((response) => {
-        expect(response.body.msg).toBe("Invalid input");
+      .then((response) => {
+        expect(response.body.msg).toEqual("Invalid input");
+      });
+  });
+
+  it("invalid path - responds with a specified error message if passed a route that does not exist", () => {
+    return request(app)
+      .get("/api/invalidEndpoint")
+      .then((response) => {
+        expect(response.body.msg).toEqual("Invalid input");
       });
   });
 });
