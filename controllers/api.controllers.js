@@ -5,14 +5,13 @@ const {
 
 exports.getAllEndpoints = (req, res, next) => {
   fetchAllEndpoints().then((endpoints) => {
-    res.status(200).send({ endpoints: endpoints });
-  });
+    res.status(200).send({ endpoints: endpoints })
+  })
+  .catch(next);
 };
 
 exports.getCategories = (req, res, next) => {
   fetchCategories()
     .then((categories) => res.status(200).send({ categories: categories }))
-    .catch((err) => {
-      next(err);
-    });
+    .catch(next);
 };
