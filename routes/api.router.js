@@ -4,11 +4,15 @@ const {
   getAllEndpoints,
   getCategories,
 } = require("../controllers/api.controllers.js");
-const { getReviewById } = require("../controllers/reviews.controllers.js");
+const {
+  getReviews,
+  getReviewById,
+} = require("../controllers/reviews.controllers.js");
 const { invalidPathHandler } = require("../controllers/error.controllers.js");
 
 app.get("/api", getAllEndpoints);
 app.get("/api/categories", getCategories);
+app.get("/api/reviews", getReviews);
 app.get("/api/reviews/:review_id", getReviewById);
 
 app.all("/*", invalidPathHandler);

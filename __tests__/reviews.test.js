@@ -3,6 +3,7 @@ const app = require("../routes/api.router.js");
 const connection = require("../db/connection.js");
 const testData = require("../db/data/test-data/index.js");
 const seed = require("../db/seeds/seed.js");
+require("jest-sorted");
 
 beforeEach(() => {
   return seed(testData);
@@ -49,6 +50,51 @@ describe("/api/reviews/:review_id - GET request", () => {
       .expect(404)
       .then((response) => {
         expect(response.body.msg).toBe("Not found");
+      });
+  });
+});
+
+describe("/api/reviews - GET request", () => {
+  it("responds with a status code of 200 and an array of the review objects, with the requested properties and an additional property of comment_count", () => {
+    return request(app)
+      .get("/api/reviews")
+      .expect(200)
+      .then((response) => {
+        const { reviews } = response.body;
+        expect(reviews.length).toBe(13);
+        reviews.forEach((review) => {
+          expect(typeof review.comment_count).toBe("number");
+          expect(review).not.toHaveProperty("review.body");
+          expect(typeof review.owner).toBe("string");
+          expect(typeof review.title).toBe("string");
+          expect(typeof review.review_id).toBe("number");
+          expect(typeof review.category).toBe("string");
+          expect(typeof review.review_img_url).toBe("string");
+          expect(typeof review.created_at).toBe("string");
+          expect(typeof review.votes).toBe("number");
+          expect(typeof review.designer).toBe("string");
+          expect(typeof review.title).toBe("string");
+        });
+      });
+  });
+
+  it("the array of review objects should be sorted by descending order of date", () => {
+    return request(app)
+      .get("/api/reviews")
+      .then((response) => {
+        const { reviews } = response.body;
+        expect(reviews).toBeSortedBy("created_at", {
+          descending: true,
+        });
+      });
+  });
+
+  it("invalid path - responds with a status code of 404 and a specified error message if passed a route that does not exist", () => {
+    return request(app)
+      .get("/api/notARoute")
+      .expect(404)
+      .then((response) => {
+        expect(response.body.msg).toBe("Invalid input");
       });
   });
 });

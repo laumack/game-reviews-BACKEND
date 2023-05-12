@@ -3,6 +3,7 @@ const {
 	createRef,
 	formatComments,
 } = require("../db/seeds/utils");
+require("jest");
 
 describe("convertTimestampToDate", () => {
 	test("returns a new object", () => {
