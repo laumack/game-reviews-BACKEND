@@ -20,7 +20,7 @@ describe("/api - GET request", () => {
       .expect(200)
       .expect("Content-Type", "application/json; charset=utf-8")
       .then((response) => {
-        expect(JSON.parse(response.body.endpoints)).toEqual(endpointsDocument);
+        expect(response.body.endpoints).toEqual(endpointsDocument);
       });
   });
 });
@@ -47,7 +47,7 @@ describe("Error handling", () => {
       .get("/api/invalidEndpoint")
       .expect(404)
       .then((response) => {
-        console.log('response: ', response.error);
+        console.log("response: ", response.error);
         expect(response.body.msg).toEqual("Invalid input");
       });
   });
