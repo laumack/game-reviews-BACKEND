@@ -20,7 +20,7 @@ describe("/api - GET request", () => {
       .expect(200)
       .expect("Content-Type", "application/json; charset=utf-8")
       .then((response) => {
-        expect(JSON.parse(response.body.endpoints)).toEqual(endpointsDocument);
+        expect(response.body.endpoints).toEqual(endpointsDocument);
       });
   });
 });
