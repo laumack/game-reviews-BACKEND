@@ -83,8 +83,9 @@ describe("/api/reviews - GET request", () => {
       .get("/api/reviews")
       .then((response) => {
         const { reviews } = response.body;
-        const testDatesArray = reviews.map(({ created_at }) => created_at);
-        expect(testDatesArray).toBeSorted({ descending: true });
+        expect(reviews).toBeSortedBy("created_at", {
+          descending: true,
+        });
       });
   });
 
