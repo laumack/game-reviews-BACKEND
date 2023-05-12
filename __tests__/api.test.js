@@ -47,7 +47,6 @@ describe("Error handling", () => {
       .get("/api/invalidEndpoint")
       .expect(404)
       .then((response) => {
-        console.log('response: ', response.error);
         expect(response.body.msg).toEqual("Invalid input");
       });
   });
