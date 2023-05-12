@@ -82,11 +82,9 @@ describe("/api/reviews - GET request", () => {
     return request(app)
       .get("/api/reviews")
       .then((response) => {
-        expect([
-          { created_at: "2021-01-25T11:16:54.963Z" },
-          { created_at: "2021-01-22T11:35:50.936Z" },
-          { created_at: "2021-01-22T10:37:04.839Z" },
-        ]).toBeSortedBy("created_at", { descending: true });
+        const { reviews } = response.body;
+        const testDatesArray = reviews.map(({ created_at }) => created_at);
+        expect(testDatesArray).toBeSorted({ descending: true });
       });
   });
 
