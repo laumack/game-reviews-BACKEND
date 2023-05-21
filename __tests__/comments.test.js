@@ -88,7 +88,7 @@ describe("/api/reviews/:review_id/comments - POST request", () => {
         });
       });
   });
-  test("returns an error if the required information is not provided - username", () => {
+  it("returns an error if the required information is not provided - username", () => {
     const newComment = {
       body: "I hate this game!",
       username: "",
@@ -101,7 +101,7 @@ describe("/api/reviews/:review_id/comments - POST request", () => {
         expect(response.body.msg).toEqual("Missing required data");
       });
   });
-  test("returns an error if the required information is not provided - body", () => {
+  it("returns an error if the required information is not provided - body", () => {
     const newComment = {
       body: "",
       username: "bainesface",

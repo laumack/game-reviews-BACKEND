@@ -5,10 +5,8 @@ const {
 
 exports.getCommentsByReviewId = (req, res, next) => {
   const { review_id } = req.params;
-  return fetchCommentsByReviewId(review_id)
-    .then((comments) => {
-      res.status(200).send({ comments: comments });
-    })
+  fetchCommentsByReviewId(review_id)
+    .then((comments) => res.status(200).send({ comments }))
     .catch(next);
 };
 
@@ -23,8 +21,6 @@ exports.postCommentByReviewId = (req, res, next) => {
     return res.status(error.status).send(error);
   }
   insertCommentByReviewId(review_id, req.body)
-    .then((comment) => {
-      res.status(201).send({ comment });
-    })
+    .then((comment) => res.status(201).send({ comment }))
     .catch(next);
 };

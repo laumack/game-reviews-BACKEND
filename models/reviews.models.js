@@ -3,9 +3,11 @@ const connection = require("../db/connection.js");
 exports.fetchReviewsById = (review_id) => {
   return connection
     .query(
-      `SELECT *
+      `
+      SELECT *
       FROM reviews
-      WHERE review_id = $1`,
+      WHERE review_id = $1;
+      `,
       [review_id]
     )
     .then((result) => {
@@ -19,13 +21,31 @@ exports.fetchReviewsById = (review_id) => {
 exports.fetchReviews = () => {
   return connection
     .query(
-      `SELECT owner, title, reviews.review_id, category, review_img_url, reviews.created_at, reviews.votes, designer, CAST(COUNT(comments.review_id) AS INT) AS comment_count
+      `
+      SELECT owner, title, reviews.review_id, category, review_img_url, reviews.created_at, reviews.votes, designer, CAST(COUNT(comments.review_id) AS INT) AS comment_count
       FROM reviews
       LEFT JOIN comments ON reviews.review_id = comments.review_id
       GROUP BY owner, title, reviews.review_id, category, review_img_url, reviews.created_at, reviews.votes, designer
-      ORDER BY created_at DESC;`
+      ORDER BY created_at DESC;
+      `
     )
     .then((result) => {
       return result.rows;
+    });
+};
+
+exports.updateReview = (review_id, inc_votes) => {
+  return connection
+    .query(
+      `
+      UPDATE reviews
+      SET votes = votes + $1
+      WHERE review_id = $2
+      RETURNING *;
+      `,
+      [inc_votes, review_id]
+    )
+    .then((result) => {
+      return result.rows[0];
     });
 };

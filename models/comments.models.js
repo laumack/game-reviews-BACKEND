@@ -3,10 +3,12 @@ const connection = require("../db/connection.js");
 exports.fetchCommentsByReviewId = (review_id) => {
   return connection
     .query(
-      `SELECT *
+      `
+      SELECT *
       FROM comments
       WHERE review_id = $1
-      ORDER BY created_at DESC;`,
+      ORDER BY created_at DESC;
+      `,
       [review_id]
     )
     .then((result) => {
@@ -21,7 +23,8 @@ exports.insertCommentByReviewId = (review_id, newComment) => {
   const { body, username } = newComment;
   return connection
     .query(
-      `INSERT INTO comments (body, author, review_id)
+      `
+      INSERT INTO comments (body, author, review_id)
       VALUES ($1, $2, $3)
       RETURNING *;
       `,
