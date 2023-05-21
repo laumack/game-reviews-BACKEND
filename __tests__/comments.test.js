@@ -84,7 +84,7 @@ describe("/api/reviews/:review_id/comments - POST request", () => {
           votes: 0,
           author: "bainesface",
           review_id: 1,
-          created_at: expect.any(String),
+          created_at: expect.any(String)
         });
       });
   });
@@ -114,4 +114,16 @@ describe("/api/reviews/:review_id/comments - POST request", () => {
         expect(response.body.msg).toEqual("Missing required data");
       });
   });
+});
+
+describe("/api/comments/:comment_id - DELETE request", () => {
+ it("responds with a status code of 204 but does not send a response body", () => {
+   return request(app)
+     .delete("/api/comments/1")
+     .expect(204)
+     .then((response) => {
+       expect(response.body).toEqual({});
+     })
+ });
+// NEED TO WRITE ERROR TESTS & CODE (AND CHECK PREVIOUS ERROR TESTS - did I check each end point for incorrect url & invalid syntax? ************
 });

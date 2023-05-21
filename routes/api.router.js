@@ -12,6 +12,7 @@ const {
 const {
   getCommentsByReviewId,
   postCommentByReviewId,
+  deleteComment,
 } = require("../controllers/comments.controllers.js");
 const { invalidPathHandler } = require("../controllers/error.controllers.js");
 const {
@@ -26,12 +27,15 @@ app.get("/api", getAllEndpoints);
 app.get("/api/categories", getCategories);
 
 app.get("/api/reviews", getReviews);
+
 app.get("/api/reviews/:review_id", getReviewById);
 
 app.get("/api/reviews/:review_id/comments", getCommentsByReviewId);
 app.post("/api/reviews/:review_id/comments", postCommentByReviewId);
 
-app.patch("/api/reviews/:review_id", patchReview); // CURRENT
+app.patch("/api/reviews/:review_id", patchReview);
+
+app.delete("/api/comments/:comment_id", deleteComment);
 
 app.all("/*", invalidPathHandler); // KEEP LAST
 
