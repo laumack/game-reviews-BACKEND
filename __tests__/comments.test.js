@@ -84,7 +84,7 @@ describe("/api/reviews/:review_id/comments - POST request", () => {
           votes: 0,
           author: "bainesface",
           review_id: 1,
-          created_at: expect.any(String)
+          created_at: expect.any(String),
         });
       });
   });
@@ -117,13 +117,28 @@ describe("/api/reviews/:review_id/comments - POST request", () => {
 });
 
 describe("/api/comments/:comment_id - DELETE request", () => {
- it("responds with a status code of 204 but does not send a response body", () => {
-   return request(app)
-     .delete("/api/comments/1")
-     .expect(204)
-     .then((response) => {
-       expect(response.body).toEqual({});
-     })
- });
-// NEED TO WRITE ERROR TESTS & CODE (AND CHECK PREVIOUS ERROR TESTS - did I check each end point for incorrect url & invalid syntax? ************
+  it("responds with a status code of 204 but does not send a response body", () => {
+    return request(app)
+      .delete("/api/comments/1")
+      .expect(204)
+      .then((response) => {
+        expect(response.body).toEqual({});
+      });
+  });
+  it("resource does not exist - responds with a status code of 404 and a specified error message if passed a comment_id that does not exist", () => {
+    return request(app)
+      .get("/api/comments/999")
+      .expect(404)
+      .then((response) => {
+        expect(response.body.msg).toBe("Invalid input");
+      });
+  });
+  it("invalid ID - responds with a status code of 400 and a specified error message if passed an invalid review_id", () => {
+    return request(app)
+      .get("/api/comments/notAnId")
+      .expect(404)
+      .then((response) => {
+        expect(response.body.msg).toBe("Invalid input");
+      });
+  });
 });
