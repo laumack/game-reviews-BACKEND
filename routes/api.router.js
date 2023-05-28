@@ -20,6 +20,7 @@ const {
   handlePsqlErrors,
   handleServerErrors,
 } = require("../errors/index.js");
+const { getUsers } = require("../controllers/users.controllers.js");
 app.use(express.json());
 
 app.get("/api", getAllEndpoints);
@@ -36,6 +37,8 @@ app.post("/api/reviews/:review_id/comments", postCommentByReviewId);
 app.patch("/api/reviews/:review_id", patchReview);
 
 app.delete("/api/comments/:comment_id", deleteComment);
+
+app.get("/api/users", getUsers);
 
 app.all("/*", invalidPathHandler); // KEEP LAST
 
