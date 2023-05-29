@@ -49,3 +49,30 @@ exports.updateReview = (review_id, inc_votes) => {
       return result.rows[0];
     });
 };
+
+// exports.getTreasures = (sort_by = "age", sort_order = "ASC", colour) => {
+//   const sortQueries = ["treasure_name", "age", "cost_at_auction"];
+//   if (!sortQueries.includes(sort_by)) {
+//     return Promise.reject({ status: 400, msg: "invalid sort query!" });
+//   }
+//   const sortOrders = ["ASC", "DESC"];
+//   if (!sortOrders.includes(sort_order.toUpperCase())) {
+//     return Promise.reject({ status: 400, msg: "invalid sort order query!" });
+//   }
+
+//   let queryStr = `
+//     SELECT * FROM treasures
+//     JOIN shops ON treasures.shop_id = shops.shop_id
+//   `;
+//   const values = [];
+//   if (colour) {
+//     queryStr += ` WHERE colour = $1`;
+//     values.push(colour);
+//   }
+
+//   queryStr += ` ORDER BY ${sort_by} ${sort_order.toUpperCase()};`;
+
+//   return db.query(queryStr, values).then((result) => {
+//     return result.rows;
+//   });
+// };

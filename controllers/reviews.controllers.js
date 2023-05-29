@@ -24,3 +24,10 @@ exports.patchReview = (req, res, next) => {
     .then((review) => res.status(200).send({ review }))
     .catch(next);
 };
+
+// exports.getReviews = (req, res, next) => {
+//   const { category, sort_by, order } = req.query;
+//   fetchUsers(category, sort_by, order)
+//     .then((users) => res.status(200).send({ users }))
+//     .catch(next);
+// };
