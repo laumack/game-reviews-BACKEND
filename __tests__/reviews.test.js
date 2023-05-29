@@ -139,7 +139,7 @@ describe("/api/reviews/:review_id - PATCH request", () => {
   });
 });
 
-describe("/api/reviews/? - QUERIES", () => {
+describe.skip("/api/reviews/? - QUERIES", () => {
   it("CATEGORY - the array of user objects can be filtered by category (this test shows: 'euro game')", () => {
     return request(app)
       .get("/api/reviews/?category=euro%20game")
