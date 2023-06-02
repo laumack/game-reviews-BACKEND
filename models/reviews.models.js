@@ -18,7 +18,13 @@ exports.fetchReviewsById = (review_id) => {
     });
 };
 
-exports.fetchReviews = () => {
+exports.fetchReviews = (category) => {
+
+  console.log('Model category: ', category);
+// if no category query then run the query below.
+  // if category query then add this to the query below - WHERE category = $1.
+// ?will the queries need to be separated or can we have a generic query string then add the 2nd argument array to this if it exists?
+   
   return connection
     .query(
       `

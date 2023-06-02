@@ -140,7 +140,7 @@ describe("/api/reviews/:review_id - PATCH request", () => {
 });
 
 describe.skip("/api/reviews/? - QUERIES", () => {
-  it("CATEGORY - the array of user objects can be filtered by category (this test shows: 'euro game')", () => {
+  it.skip("CATEGORY - the array of user objects can be filtered by category (this test shows: 'euro game')", () => {
     return request(app)
       .get("/api/reviews/?category=euro%20game")
       .then((response) => {
@@ -150,7 +150,7 @@ describe.skip("/api/reviews/? - QUERIES", () => {
         });
       });
   });
-  it("CATEGORY - the array of user objects can be filtered by category (this test shows: 'dexterity')", () => {
+  it.skip("CATEGORY - the array of user objects can be filtered by category (this test shows: 'dexterity')", () => {
     return request(app)
       .get("/api/reviews/?category=dexterity")
       .then((response) => {
@@ -160,7 +160,7 @@ describe.skip("/api/reviews/? - QUERIES", () => {
         });
       });
   });
-  it("SORT_BY - the array of user objects can be sorted by any valid column, and defaults to descending order (this test shows: 'owner')", () => {
+  it.skip("SORT_BY - the array of user objects can be sorted by any valid column, and defaults to descending order (this test shows: 'owner')", () => {
     return request(app)
       .get("/api/reviews/?sort_by=owner")
       .then((response) => {
@@ -170,7 +170,7 @@ describe.skip("/api/reviews/? - QUERIES", () => {
         });
       });
   });
-  it("SORT_BY - the array of user objects can be sorted by any valid column, and defaults to descending order (this test shows: 'review_body')", () => {
+  it.skip("SORT_BY - the array of user objects can be sorted by any valid column, and defaults to descending order (this test shows: 'review_body')", () => {
     return request(app)
       .get("/api/reviews/?sort_by=review_body")
       .then((response) => {
@@ -180,9 +180,9 @@ describe.skip("/api/reviews/? - QUERIES", () => {
         });
       });
   });
-  it("ORDER - the array of user objects can be ordered by ascending or descending order of the chosen column (this test shows: 'designer', 'ascending')", () => {
+  it.skip("ORDER - the array of user objects can be ordered by ascending or descending order of the chosen column (this test shows: 'designer', 'ascending')", () => {
     return request(app)
-      .get("/api/reviews/?sort_by=designer&order_by=asc")
+      .get("/api/reviews/?sort_by=designer&order=asc")
       .then((response) => {
         const { reviews } = response.body;
         expect(reviews).toBeSortedBy("designer", {
@@ -190,9 +190,9 @@ describe.skip("/api/reviews/? - QUERIES", () => {
         });
       });
   });
-  it("ORDER - the array of user objects can be ordered by ascending or descending order of the chosen column (this test shows: 'title', 'ascending')", () => {
+  it.skip("ORDER - the array of user objects can be ordered by ascending or descending order of the chosen column (this test shows: 'title', 'ascending')", () => {
     return request(app)
-      .get("/api/reviews/?sort_by=title&order_by=asc")
+      .get("/api/reviews/?sort_by=title&order=asc")
       .then((response) => {
         const { reviews } = response.body;
         expect(reviews).toBeSortedBy("title", {

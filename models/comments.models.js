@@ -1,22 +1,39 @@
 const connection = require("../db/connection.js");
+const { checkReviewExists } = require("../db/utils.js");
 
 exports.fetchCommentsByReviewId = (review_id) => {
-  return connection
-    .query(
-      `
-      SELECT *
-      FROM comments
-      WHERE review_id = $1
-      ORDER BY created_at DESC;
-      `,
-      [review_id]
-    )
+  return checkReviewExists(review_id)
+    .then(() => {
+      return connection.query(
+        `
+          SELECT *
+          FROM comments
+          WHERE review_id = $1
+          ORDER BY created_at DESC;
+          `,
+        [review_id]
+      );
+    })
     .then((result) => {
-      if (result.rows.length === 0) {
-        return Promise.reject({ status: 404, msg: "Not found" }); // SHOULD THIS BE CHECKED BEFORE QUERY IS MADE?
-      }
       return result.rows;
     });
+
+  // return connection
+  //   .query(
+  //     `
+  //     SELECT *
+  //     FROM comments
+  //     WHERE review_id = $1
+  //     ORDER BY created_at DESC;
+  //     `,
+  //     [review_id]
+  //   )
+  //   .then((result) => {
+  //     if (result.rows.length === 0) {
+  //       return Promise.reject({ status: 404, msg: "Not found" }); // SHOULD THIS BE CHECKED BEFORE QUERY IS MADE?
+  //     }
+  //     return result.rows;
+  //   });
 };
 
 exports.insertCommentByReviewId = (review_id, newComment) => {
@@ -38,7 +55,7 @@ exports.insertCommentByReviewId = (review_id, newComment) => {
 exports.removeComment = (comment_id) => {
   return connection
     .query(
-      `
+    `
       DELETE FROM comments
       WHERE comment_id = $1;
       `,

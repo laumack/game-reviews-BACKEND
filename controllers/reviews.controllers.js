@@ -1,3 +1,4 @@
+const { forEach } = require("../db/data/test-data/categories");
 const {
   fetchReviewsById,
   fetchReviews,
@@ -12,10 +13,15 @@ exports.getReviewById = (req, res, next) => {
 };
 
 exports.getReviews = (req, res, next) => {
-  fetchReviews()
+  console.log(req.query)
+  const { category } = req.query;
+  console.log('category: ', category);
+  // const sort_by = '';
+  // const order = '';
+  fetchReviews(category)
     .then((reviews) => res.status(200).send({ reviews }))
     .catch(next);
-};
+}; ////// QUERIES
 
 exports.patchReview = (req, res, next) => {
   const { review_id } = req.params;

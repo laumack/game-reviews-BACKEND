@@ -31,6 +31,15 @@ describe("/api/reviews/:review_id/comments - GET request", () => {
         });
       });
   });
+  it("responds with a status code of 200 and an empty comments array for the given review id number for a review which has no comments", () => {
+    return request(app)
+      .get("/api/reviews/1/comments")
+      .expect(200)
+      .then((response) => {
+        const comments = response.body.comments;
+        expect(comments.length).toBe(0);
+      });
+  });
   it("the array of comments for the given review id number should be sorted by descending order of date", () => {
     return request(app)
       .get("/api/reviews/2/comments")
@@ -46,7 +55,7 @@ describe("/api/reviews/:review_id/comments - GET request", () => {
       .get("/api/reviews/999/comments")
       .expect(404)
       .then((response) => {
-        expect(response.body.msg).toBe("Not found");
+        expect(response.body.msg).toBe("Review ID not found");
       });
   });
   it("invalid ID - responds with a status code of 400 and a specified error message if passed an invalid review_id", () => {
