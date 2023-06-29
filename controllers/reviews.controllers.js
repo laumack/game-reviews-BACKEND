@@ -13,9 +13,7 @@ exports.getReviewById = (req, res, next) => {
 };
 
 exports.getReviews = (req, res, next) => {
-  console.log(req.query)
   const { category } = req.query;
-  console.log('category: ', category);
   // const sort_by = '';
   // const order = '';
   fetchReviews(category)

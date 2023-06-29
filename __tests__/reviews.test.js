@@ -139,30 +139,35 @@ describe("/api/reviews/:review_id - PATCH request", () => {
   });
 });
 
-describe.skip("/api/reviews/? - QUERIES", () => {
-  it.skip("CATEGORY - the array of user objects can be filtered by category (this test shows: 'euro game')", () => {
+describe("/api/reviews/? - QUERIES", () => {
+  it("CATEGORY - the array of user objects can be filtered by category (this test shows: 'euro game')", () => {
     return request(app)
       .get("/api/reviews/?category=euro%20game")
+      .expect(200)
       .then((response) => {
         const { reviews } = response.body;
+        expect(reviews.length).toBe(1);
         reviews.forEach((review) => {
           expect(review.category).toBe("euro game");
         });
       });
   });
-  it.skip("CATEGORY - the array of user objects can be filtered by category (this test shows: 'dexterity')", () => {
+  it("CATEGORY - the array of user objects can be filtered by category (this test shows: 'social deduction')", () => {
     return request(app)
-      .get("/api/reviews/?category=dexterity")
+      .get("/api/reviews/?category=social%20deduction")
+      .expect(200)
       .then((response) => {
         const { reviews } = response.body;
+        expect(reviews.length).toBe(11);
         reviews.forEach((review) => {
-          expect(review.category).toBe("dexterity");
+          expect(review.category).toBe("social deduction");
         });
       });
   });
   it.skip("SORT_BY - the array of user objects can be sorted by any valid column, and defaults to descending order (this test shows: 'owner')", () => {
     return request(app)
       .get("/api/reviews/?sort_by=owner")
+      .expect(200)
       .then((response) => {
         const { reviews } = response.body;
         expect(reviews).toBeSortedBy("owner", {
@@ -173,6 +178,7 @@ describe.skip("/api/reviews/? - QUERIES", () => {
   it.skip("SORT_BY - the array of user objects can be sorted by any valid column, and defaults to descending order (this test shows: 'review_body')", () => {
     return request(app)
       .get("/api/reviews/?sort_by=review_body")
+      .expect(200)
       .then((response) => {
         const { reviews } = response.body;
         expect(reviews).toBeSortedBy("review_body", {
@@ -183,6 +189,7 @@ describe.skip("/api/reviews/? - QUERIES", () => {
   it.skip("ORDER - the array of user objects can be ordered by ascending or descending order of the chosen column (this test shows: 'designer', 'ascending')", () => {
     return request(app)
       .get("/api/reviews/?sort_by=designer&order=asc")
+      .expect(200)
       .then((response) => {
         const { reviews } = response.body;
         expect(reviews).toBeSortedBy("designer", {
@@ -193,11 +200,20 @@ describe.skip("/api/reviews/? - QUERIES", () => {
   it.skip("ORDER - the array of user objects can be ordered by ascending or descending order of the chosen column (this test shows: 'title', 'ascending')", () => {
     return request(app)
       .get("/api/reviews/?sort_by=title&order=asc")
+      .expect(200)
       .then((response) => {
         const { reviews } = response.body;
         expect(reviews).toBeSortedBy("title", {
           descending: false,
         });
+      });
+  });
+  it.skip("unknown query - responds with a status code of 404 and corresponding error message if passed an unknown query parameter", () => {
+    return request(app)
+      .get("/api/reviews/?category=nonsense")
+      .expect(404)
+      .then((response) => {
+        expect(response.body.msg).toBe("Not found");
       });
   });
 });
