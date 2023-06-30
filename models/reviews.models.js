@@ -4,7 +4,12 @@ exports.fetchReviewsById = (review_id) => {
   return connection
     .query(
       `
-      SELECT *
+      SELECT *,
+        (
+          SELECT COUNT(*)::INTEGER
+          FROM comments
+          WHERE review_id = $1
+        ) AS comment_count
       FROM reviews
       WHERE review_id = $1;
       `,

@@ -264,7 +264,7 @@ describe("/api/reviews/:review_id (comment count) - GET request", () => {
       .expect(200)
       .then((response) => {
         const review = response.body.review;
-        expect(review.comment_count).toBe(3);
+        expect(review.comment_count).toEqual(3);
       });
   });
   it("the review response object now includes a comment_count to show the total count of all the comments with this review_id (this test shows a review with no comments)", () => {
@@ -273,7 +273,7 @@ describe("/api/reviews/:review_id (comment count) - GET request", () => {
       .expect(200)
       .then((response) => {
         const review = response.body.review;
-        expect(review.comment_count).toBe(0);
+        expect(review.comment_count).toEqual(0);
       });
   });
 });
