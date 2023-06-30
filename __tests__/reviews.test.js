@@ -256,3 +256,24 @@ describe("/api/reviews/? - QUERIES", () => {
       });
   });
 });
+
+describe("/api/reviews/:review_id (comment count) - GET request", () => {
+  it("the review response object now includes a comment_count to show the total count of all the comments with this review_id (this test shows a review with multiple comments)", () => {
+    return request(app)
+      .get("/api/reviews/2")
+      .expect(200)
+      .then((response) => {
+        const review = response.body.review;
+        expect(review.comment_count).toEqual(3);
+      });
+  });
+  it("the review response object now includes a comment_count to show the total count of all the comments with this review_id (this test shows a review with no comments)", () => {
+    return request(app)
+      .get("/api/reviews/1")
+      .expect(200)
+      .then((response) => {
+        const review = response.body.review;
+        expect(review.comment_count).toEqual(0);
+      });
+  });
+});
