@@ -34,7 +34,12 @@ This project is a ***work in progress***. Future plans include:
 
 # Project Setup ⚛️
 
-Fork and clone this repo on GitHub.
+[Fork](https://github.com/laumack/game-reviews-BACKEND/fork) this repo to get your own copy.  
+Then clone the repo (into your desired directory) by using:
+
+```
+$ git clone https://github.com/laumack/game-reviews-BACKEND.git
+```
 
 ## Minimum Requirements ⚠️
 
@@ -118,6 +123,6 @@ SOFTWARE.
 ---
 ---
 
-## [Back to top 🔝](https://github.com/laumack/game-reviews-BACKEND#board-master-backend-)
+### [Back to top 🔝](https://github.com/laumack/game-reviews-BACKEND#board-master-backend-)
 
 ---
