@@ -1,15 +1,11 @@
 # **Board-Master:** Back-end
 *Back-end project for a board game review website* - WORK IN PROGRESS
 
-#
-
 ## Background
 
 This project builds an API for the purpose of accessing application data programmatically. The intention is to mimic the building of a real world backend service (such as [reddit](https://www.reddit.com/)) which should provide this information to the front end architecture.
 
 The database is [PSQL](https://www.postgresql.org/), and it is interacted with using [node-postgres](https://node-postgres.com/).
-
-#
 
 ## Links
 
@@ -18,8 +14,6 @@ The database is [PSQL](https://www.postgresql.org/), and it is interacted with u
 
 >The front-end repo is here:  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; **https://github.com/laumack/game-reviews-FRONTEND**
-
-#
 
 ## Plans
 
@@ -34,7 +28,6 @@ This project is a ***work in progress***. Future plans include:
     * DELETE /api/reviews/:review_id 
 * refactoring any code and ensuring that all files have been separated by their endpoint type
 
----
 ---
 ---
 
