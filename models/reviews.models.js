@@ -18,7 +18,7 @@ exports.fetchReviewsById = (review_id) => {
     });
 };
 
-exports.fetchReviews = (category, sort_by, order) => {
+exports.fetchReviews = (category, sort_by = "created_at", order = "desc") => {
   let queryStr1 = `
       SELECT owner, title, reviews.review_id, category, review_img_url, reviews.created_at, reviews.votes, designer, CAST(COUNT(comments.review_id) AS INT) AS comment_count
       FROM reviews
@@ -27,10 +27,9 @@ exports.fetchReviews = (category, sort_by, order) => {
   let queryStr2 = `
       GROUP BY owner, title, reviews.review_id, category, review_img_url, reviews.created_at, reviews.votes, designer
       `;
-  let queryStrSort = `
-      ORDER BY created_at
+  let queryOrder = `
+      ORDER BY ${sort_by} ${order.toUpperCase()}
       `;
-  let queryStrOrder = ` DESC`;
 
   const validCategories = [
     "euro game",
@@ -68,18 +67,15 @@ exports.fetchReviews = (category, sort_by, order) => {
     if (!validSortQueries.includes(sort_by)) {
       return Promise.reject({ status: 400, msg: "Invalid sort query" });
     }
-    queryStrSort = `ORDER BY ${sort_by}`;
   }
 
   if (order) {
     if (!validSortOrders.includes(order.toUpperCase())) {
       return Promise.reject({ status: 400, msg: "Invalid sort order" });
     }
-    queryStrOrder = ` ${order.toUpperCase()}`;
-
   }
 
-  const queryStr = queryStr1 + queryStr2 + queryStrSort + queryStrOrder;
+  const queryStr = queryStr1 + queryStr2 + queryOrder;
 
   return connection.query(queryStr, queryValues).then((result) => {
     return result.rows;
