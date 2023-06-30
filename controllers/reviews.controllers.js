@@ -1,4 +1,3 @@
-const { forEach } = require("../db/data/test-data/categories");
 const {
   fetchReviewsById,
   fetchReviews,
