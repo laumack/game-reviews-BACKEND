@@ -13,10 +13,9 @@ exports.getReviewById = (req, res, next) => {
 };
 
 exports.getReviews = (req, res, next) => {
-  const { category } = req.query;
-  // const sort_by = '';
+  const { category, sort_by } = req.query;
   // const order = '';
-  fetchReviews(category)
+  fetchReviews(category, sort_by)
     .then((reviews) => res.status(200).send({ reviews }))
     .catch(next);
 }; ////// QUERIES
@@ -28,10 +27,3 @@ exports.patchReview = (req, res, next) => {
     .then((review) => res.status(200).send({ review }))
     .catch(next);
 };
-
-// exports.getReviews = (req, res, next) => {
-//   const { category, sort_by, order } = req.query;
-//   fetchUsers(category, sort_by, order)
-//     .then((users) => res.status(200).send({ users }))
-//     .catch(next);
-// };

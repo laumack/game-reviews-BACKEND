@@ -18,7 +18,7 @@ exports.fetchReviewsById = (review_id) => {
     });
 };
 
-exports.fetchReviews = (category) => {
+exports.fetchReviews = (category, sort_by) => {
   let queryStr1 = `
       SELECT owner, title, reviews.review_id, category, review_img_url, reviews.created_at, reviews.votes, designer, CAST(COUNT(comments.review_id) AS INT) AS comment_count
       FROM reviews
@@ -26,41 +26,41 @@ exports.fetchReviews = (category) => {
       `;
   let queryStr2 = `
       GROUP BY owner, title, reviews.review_id, category, review_img_url, reviews.created_at, reviews.votes, designer
-      ORDER BY created_at DESC
-  `;
+      `;
+  let queryStrSort = `
+      ORDER BY created_at
+      `;
+  let queryStrOrder = ` DESC`
+  
   const queryValues = [];
+  const validSortQueries = [
+    "review_id",
+    "title",
+    "category",
+    "designer",
+    "owner",
+    "created_at",
+    "votes",
+    "comment_count"
+  ];
 
   if (category) {
     queryValues.push(category);
     queryStr1 += ` WHERE category = $1`;
   }
 
-  const queryStr = queryStr1 + queryStr2;
+  if (sort_by) {
+    if (!validSortQueries.includes(sort_by)) {
+      return Promise.reject({ status: 404, msg: "Invalid sort query" });
+    }
+      queryStrSort = `ORDER BY ${sort_by}`
+  }
+
+  const queryStr = queryStr1 + queryStr2 + queryStrSort + queryStrOrder;
 
   return connection.query(queryStr, queryValues).then((result) => {
     return result.rows;
   });
-
-  // NEED TO PROTECT FROM SQL INJECTION
-
-  // if no category query then run the query below.
-  // if category query then add this to the query below - WHERE category = $1.
-  // ?will the queries need to be separated or can we have a generic query string then add the 2nd argument array to this if it exists?
-
-  // return connection
-  //   .query(
-  // `
-  // SELECT owner, title, reviews.review_id, category, review_img_url, reviews.created_at, reviews.votes, designer, CAST(COUNT(comments.review_id) AS INT) AS comment_count
-  // FROM reviews
-  // LEFT JOIN comments ON reviews.review_id = comments.review_id
-  // GROUP BY owner, title, reviews.review_id, category, review_img_url, reviews.created_at, reviews.votes, designer
-  // ORDER BY created_at DESC
-  // `,
-  // [category]
-  // )
-  // .then((result) => {
-  //   return result.rows;
-  // });
 };
 
 exports.updateReview = (review_id, inc_votes) => {
