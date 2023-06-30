@@ -76,7 +76,7 @@ $ npm run setup-dbs
 $ npm run seed
 ```
 
-## Run Tests 👩‍🎓
+## Run Tests 🧪
 
 The project was built using Test-Driven Development throughout, with [Jest](https://jestjs.io/) and [Jest-Sorted](https://github.com/P-Copley/jest-sorted). As a result, there are comprehensive tests included, which you can run by using:
 
@@ -117,4 +117,4 @@ SOFTWARE.
 
 ---
 
-## [Back to top 🔝](#board-master-backend-🎲)
+## [Back to top 🔝](https://github.com/laumack/game-reviews-BACKEND#board-master-backend-)
