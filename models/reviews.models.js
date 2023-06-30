@@ -31,6 +31,7 @@ exports.fetchReviews = (category, sort_by = "created_at", order = "desc") => {
       ORDER BY ${sort_by} ${order.toUpperCase()}
       `;
 
+  // the categories listed below include the INITIAL categories in the development database AND the test database
   const validCategories = [
     "euro game",
     "social deduction",
