@@ -116,5 +116,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 ---
+---
 
 ## [Back to top 🔝](https://github.com/laumack/game-reviews-BACKEND#board-master-backend-)
+
+---
