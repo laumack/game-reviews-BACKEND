@@ -13,12 +13,11 @@ exports.getReviewById = (req, res, next) => {
 };
 
 exports.getReviews = (req, res, next) => {
-  const { category, sort_by } = req.query;
-  // const order = '';
-  fetchReviews(category, sort_by)
+  const { category, sort_by, order } = req.query;
+  fetchReviews(category, sort_by, order)
     .then((reviews) => res.status(200).send({ reviews }))
     .catch(next);
-}; ////// QUERIES
+};
 
 exports.patchReview = (req, res, next) => {
   const { review_id } = req.params;

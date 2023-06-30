@@ -198,7 +198,7 @@ describe("/api/reviews/? - QUERIES", () => {
         });
       });
   });
-  it.skip("ORDER - the array of user objects can be ordered by ascending or descending order of the chosen column (this test shows: 'designer', 'ascending')", () => {
+  it("ORDER - the array of user objects can be ordered by ascending or descending order of the chosen column (this test shows: 'designer', 'ascending')", () => {
     return request(app)
       .get("/api/reviews/?sort_by=designer&order=asc")
       .expect(200)
@@ -209,34 +209,50 @@ describe("/api/reviews/? - QUERIES", () => {
         });
       });
   });
-  it.skip("ORDER - the array of user objects can be ordered by ascending or descending order of the chosen column (this test shows: 'title', 'ascending')", () => {
+  it("ORDER - the array of review objects can be ordered by ascending or descending order of the chosen column (this test shows: 'review_id', 'ascending')", () => {
     return request(app)
-      .get("/api/reviews/?sort_by=title&order=asc")
+      .get("/api/reviews/?sort_by=review_id&order=asc")
       .expect(200)
       .then((response) => {
         const { reviews } = response.body;
-        expect(reviews).toBeSortedBy("title", {
+        expect(reviews).toBeSortedBy("review_id", {
           descending: false,
         });
       });
   });
-  it.skip("ORDER - the array of review objects defaults to descending order", () => {
+  it("ORDER - the array of review objects defaults to descending order", () => {
     return request(app)
-      .get("/api/reviews/?sort_by=title")
+      .get("/api/reviews/?sort_by=review_id")
       .expect(200)
       .then((response) => {
         const { reviews } = response.body;
-        expect(reviews).toBeSortedBy("title", {
+        expect(reviews).toBeSortedBy("review_id", {
           descending: true,
         });
       });
   });
-  it.skip("unknown query - responds with a status code of 404 and corresponding error message if passed an unknown query parameter", () => {
+  it("unknown category - responds with a status code of 404 and corresponding error message if passed an unknown query parameter", () => {
     return request(app)
       .get("/api/reviews/?category=nonsense")
       .expect(404)
       .then((response) => {
+        expect(response.body.msg).toBe("Category not found");
+      });
+  });
+  it("unknown sort_by - responds with a status code of 404 and corresponding error message if passed an unknown query parameter", () => {
+    return request(app)
+      .get("/api/reviews/?sort_by=nonsense")
+      .expect(400)
+      .then((response) => {
         expect(response.body.msg).toBe("Invalid sort query");
+      });
+  });
+  it("unknown order - responds with a status code of 404 and corresponding error message if passed an unknown query parameter", () => {
+    return request(app)
+      .get("/api/reviews/?sort_by=designer&order=nonsense")
+      .expect(400)
+      .then((response) => {
+        expect(response.body.msg).toBe("Invalid sort order");
       });
   });
 });

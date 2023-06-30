@@ -18,7 +18,7 @@ exports.fetchReviewsById = (review_id) => {
     });
 };
 
-exports.fetchReviews = (category, sort_by) => {
+exports.fetchReviews = (category, sort_by, order) => {
   let queryStr1 = `
       SELECT owner, title, reviews.review_id, category, review_img_url, reviews.created_at, reviews.votes, designer, CAST(COUNT(comments.review_id) AS INT) AS comment_count
       FROM reviews
@@ -30,9 +30,19 @@ exports.fetchReviews = (category, sort_by) => {
   let queryStrSort = `
       ORDER BY created_at
       `;
-  let queryStrOrder = ` DESC`
-  
-  const queryValues = [];
+  let queryStrOrder = ` DESC`;
+
+  const validCategories = [
+    "euro game",
+    "social deduction",
+    "strategy",
+    "hidden-roles",
+    "dexterity",
+    "push-your-luck",
+    "roll-and-write",
+    "deck-building",
+    "engine-building",
+  ];
   const validSortQueries = [
     "review_id",
     "title",
@@ -41,19 +51,32 @@ exports.fetchReviews = (category, sort_by) => {
     "owner",
     "created_at",
     "votes",
-    "comment_count"
+    "comment_count",
   ];
+  const validSortOrders = ["ASC", "DESC"];
+  const queryValues = [];
 
   if (category) {
+    if (!validCategories.includes(category)) {
+      return Promise.reject({ status: 404, msg: "Category not found" });
+    }
     queryValues.push(category);
     queryStr1 += ` WHERE category = $1`;
   }
 
   if (sort_by) {
     if (!validSortQueries.includes(sort_by)) {
-      return Promise.reject({ status: 404, msg: "Invalid sort query" });
+      return Promise.reject({ status: 400, msg: "Invalid sort query" });
     }
-      queryStrSort = `ORDER BY ${sort_by}`
+    queryStrSort = `ORDER BY ${sort_by}`;
+  }
+
+  if (order) {
+    if (!validSortOrders.includes(order.toUpperCase())) {
+      return Promise.reject({ status: 400, msg: "Invalid sort order" });
+    }
+    queryStrOrder = ` ${order.toUpperCase()}`;
+
   }
 
   const queryStr = queryStr1 + queryStr2 + queryStrSort + queryStrOrder;
@@ -78,30 +101,3 @@ exports.updateReview = (review_id, inc_votes) => {
       return result.rows[0];
     });
 };
-
-// exports.getTreasures = (sort_by = "age", sort_order = "ASC", colour) => {
-//   const sortQueries = ["treasure_name", "age", "cost_at_auction"];
-//   if (!sortQueries.includes(sort_by)) {
-//     return Promise.reject({ status: 400, msg: "invalid sort query!" });
-//   }
-//   const sortOrders = ["ASC", "DESC"];
-//   if (!sortOrders.includes(sort_order.toUpperCase())) {
-//     return Promise.reject({ status: 400, msg: "invalid sort order query!" });
-//   }
-
-//   let queryStr = `
-//     SELECT * FROM treasures
-//     JOIN shops ON treasures.shop_id = shops.shop_id
-//   `;
-//   const values = [];
-//   if (colour) {
-//     queryStr += ` WHERE colour = $1`;
-//     values.push(colour);
-//   }
-
-//   queryStr += ` ORDER BY ${sort_by} ${sort_order.toUpperCase()};`;
-
-//   return db.query(queryStr, values).then((result) => {
-//     return result.rows;
-//   });
-// };
